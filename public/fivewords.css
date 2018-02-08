@@ -1,7 +1,19 @@
-body {
-  background: linen
+span {
+  background: #A0F5F3;
 }
 
-span.l-5 {
-  background: orange;
+.l-1, .l-2 {
+  background: #FDF6C3;
+}
+
+.l-3, .l-4 {
+  background: #FAC9F6;
+}
+
+.l-5 {
+  background: #FDB8B1;
+}
+
+.l-6, .l-7, .l-8, .l-9, .l-10, .l-11 {
+  background: #C1F3C0;
 }
