@@ -1,5 +1,13 @@
+section {
+  line-height: 1.6;
+}
+
 span {
   background: #A0F5F3;
+  margin-left: -0.25rem;
+  padding-left: 0.25rem;
+  margin-right: -0.1875rem;
+  padding-right: 0.25rem;
 }
 
 .l-1, .l-2 {
