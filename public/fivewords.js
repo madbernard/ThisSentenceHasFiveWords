@@ -1,10 +1,12 @@
 var seeColorsButton,
   textBody,
-  sentenceEnds = /(\n|[.?!]+['"]*\s+)/, // todo, not "mr. dr. etc"
+  lineBreaks = /[\n\r\u2028\u2029]/,
+  sentenceEnds = /([\n\r\u2028\u2029]|[.?!]+['"]*\s+)/, // todo, not "mr. dr. etc"
   wordBreaks = /\w[-–—]\w|\s+/,
   endSpaces = /\s+$/,
   sentenceInfo,
-  processedText;
+  processedText,
+  userParagraph = '<p class=\"userWords\">';
 
 document.addEventListener('DOMContentLoaded', function(event) {
   init();
@@ -26,21 +28,24 @@ function processText (){
   var text = textBody.value;
   var wordsAndEndsArray = text.split(sentenceEnds);
 
-  var sentenceArray = [];
+  var sentenceArray = [userParagraph];
 
   // split with capture regex results in [text, capture, text, capture]
   for (var i = 0; i < wordsAndEndsArray.length; i = i + 2) {
-    // todo: check match against sentenceEnds, turn \n into <br>
     if (wordsAndEndsArray[i+1]) {
-      var sentenceWithEnd = wordsAndEndsArray[i] + wordsAndEndsArray[i+1];
+      var end = wordsAndEndsArray[i+1].replace(lineBreaks, '</p>' + userParagraph);
+      var sentenceWithEnd = wordsAndEndsArray[i] + end;
       sentenceArray.push(sentenceWithEnd.replace(endSpaces, ''));
     }
     else {
       sentenceArray.push(wordsAndEndsArray[i].replace(endSpaces, ''));
     }
   }
+  sentenceArray.push('</p>');
 
-  sentenceInfo = sentenceArray.map(function loadObject (sentence) {
+
+  sentenceInfo = sentenceArray.map(function prepareObject (sentence) {
+    // todo: everything is wrapped in a span of l-2 for <p class="etc">
     var length = sentence.split(wordBreaks).length;
     return {
       sentence: sentence,
